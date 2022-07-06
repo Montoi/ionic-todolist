@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add New Task</ion-title>
+    <ion-icon name="close" slot="end" size="large" (click)="dismis()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-item>
+      <ion-item>
+        <ion-textarea [(ngModel)]="taskName" placeholder="Escribe la tarea aqui" ></ion-textarea>
+      </ion-item>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Prioridad</ion-label>
+      <ion-select [(ngModel)]="taskPriority">
+        <ion-select-option value="Low"><ion-icon name="add"></ion-icon>Baja</ion-select-option>
+        <ion-select-option value="Middle">Media</ion-select-option>
+        <ion-select-option value="High">Alta</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="calendar-outline"slot="start"></ion-icon>
+      <ion-label >Due Date </ion-label>
+      <ion-datetime [(ngModel)]="taskDate " tFormat="D MMM YYYY H:mm"></ion-datetime>
+
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="pricetag-outline" slot="start"></ion-icon>
+      <ion-label>Categoria</ion-label>
+      <span> {{taskCategory}} </span>
+    </ion-item>
+
+    <ion-item>
+      <ion-chip *ngFor="let category of categories; let i = index" (click)="selectedCategory(i)" >
+         <ion-label> {{category}} </ion-label>
+      </ion-chip>
+    </ion-item>
+
+
+    <ion-button class="ion-margin" expand="block" (click)="addTask()">Agregar Tarea</ion-button>
+
+
+
+  </ion-card>
+</ion-content>
