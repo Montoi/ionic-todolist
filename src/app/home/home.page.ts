@@ -98,4 +98,28 @@ export class HomePage implements OnInit {
     this.dataService.removeItem(index);
     console.log('Elemento borrado');
   }
+  onComplete(i){
+    this.alertCtrl
+      .create({
+        header: 'Felicidades!!!',
+        message: '¿Realmente completaste la tarea?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+          },
+          {
+            text: 'Completar',
+            handler: () => {
+              this.delete(i);
+
+            },
+          },
+        ],
+      })
+      .then((alertEl) => {
+        alertEl.present();
+
+      });
+  }
 }
