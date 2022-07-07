@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
+import { DataService } from '../data.service';
 import { NewTaskPage } from '../tasks/new-task/new-task.page';
 import { Tasks } from '../tasks/tasks.model';
 import { TasksService } from '../tasks/tasks.service';
@@ -10,17 +11,29 @@ import { TasksService } from '../tasks/tasks.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  todoList: Tasks[];
+  todoList = [];
 
   today: number = Date.now();
   constructor(
     public modalCtrl: ModalController,
     public taskService: TasksService,
-    private alertCtrl: AlertController
-  ) {}
+    private alertCtrl: AlertController,
+    private dataService:DataService
+
+  ) {
+    this.dataService.init();
+    this.loadData();
+  }
 
   ngOnInit(): void {
-    this.todoList = this.taskService.GetAllTasks();
+
+  }
+
+  async loadData(){
+
+  this.todoList = await this.dataService.getData();
+
+
   }
 
   onDeleteAlert(index) {
@@ -37,7 +50,7 @@ export class HomePage implements OnInit {
             text: 'Borrar',
             handler: () => {
               this.delete(index);
-              this.todoList = this.taskService.GetAllTasks();
+              this.loadData();
             },
           },
         ],
@@ -56,12 +69,14 @@ export class HomePage implements OnInit {
     const { data } = await modal.onDidDismiss();
 
     if (data != null) {
-      this.taskService.AddTask(data);
-      this.todoList = this.taskService.GetAllTasks();
+      this.dataService.addData(data)
+      await this.loadData();
       console.log('Tarea agregada', data);
     } else {
       console.log('cancelado');
     }
+
+    await this.loadData();
   }
 
   async onEdit(index) {
@@ -80,8 +95,9 @@ export class HomePage implements OnInit {
     }
   }
 
-  delete(index) {
-    this.taskService.Delete(index);
+   delete(index) {
+    this.dataService.removeItem(index);
+    this.loadData();
     console.log('Elemento borrado');
   }
 }
