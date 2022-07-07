@@ -11,7 +11,7 @@ import { TasksService } from '../tasks/tasks.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  todoList = [];
+  todoList:any = [];
 
   today: number = Date.now();
   constructor(
@@ -22,21 +22,19 @@ export class HomePage implements OnInit {
 
   ) {
     this.dataService.init();
-    this.loadData();
+
   }
 
   ngOnInit(): void {
-
+    this.loadData();
   }
 
-  async loadData(){
+   async loadData(){
 
-  this.todoList = await this.dataService.getData();
-
-
+    this.todoList = await this.dataService.getData()
   }
 
-  onDeleteAlert(index) {
+  async onDeleteAlert(index) {
     this.alertCtrl
       .create({
         header: '¿Estás seguro?',
@@ -50,14 +48,16 @@ export class HomePage implements OnInit {
             text: 'Borrar',
             handler: () => {
               this.delete(index);
-              this.loadData();
+
             },
           },
         ],
       })
       .then((alertEl) => {
         alertEl.present();
+
       });
+
   }
 
   async addTask() {
@@ -65,18 +65,18 @@ export class HomePage implements OnInit {
       component: NewTaskPage,
     });
 
-    await modal.present();
+    modal.present();
     const { data } = await modal.onDidDismiss();
 
     if (data != null) {
       this.dataService.addData(data)
-      await this.loadData();
+
       console.log('Tarea agregada', data);
     } else {
       console.log('cancelado');
     }
 
-    await this.loadData();
+
   }
 
   async onEdit(index) {
@@ -87,8 +87,7 @@ export class HomePage implements OnInit {
     await modal.present();
     const { data } = await modal.onDidDismiss();
     if (index >= 0 && data != null) {
-      this.taskService.Edit(index, data);
-      this.todoList = this.taskService.GetAllTasks();
+      this.dataService.Edit(index, data);
       console.log('Editado');
     } else {
       console.log('no hay indice');
@@ -97,7 +96,6 @@ export class HomePage implements OnInit {
 
    delete(index) {
     this.dataService.removeItem(index);
-    this.loadData();
     console.log('Elemento borrado');
   }
 }

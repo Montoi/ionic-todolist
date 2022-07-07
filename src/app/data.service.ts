@@ -9,9 +9,11 @@ const storage_key ='mylist';
 })
 export class DataService {
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage) {
 
+   }
 
+  tasks = []
 
 async init(){
   console.log('init')
@@ -19,25 +21,33 @@ async init(){
   console.log('done')
 }
 
-async getData(){
-  let task: any = [];
+  async getData(){
   await this.storage.forEach((key,value,index) => {
-    task = key
-    console.log('soy yo', key)
-  })
-  return task
+    this.tasks = key
+
+  });
+  return this.tasks
 }
 
-async addData(item:Tasks){
-  const storedData = await this.storage.get(storage_key) || [];
-  storedData.push(item);
-  return this.storage.set(storage_key, storedData)
+ addData(item:Tasks){
+  //const storedData = await this.storage.get(storage_key) || [];
+  this.tasks.push(item);
+  return  this.storage.set(storage_key, this.tasks)
 }
 
 async removeItem(index){
-  const storedData = await this.storage.get(storage_key) || [];
-  storedData.splice(index, 1);
-  return this.storage.set(storage_key, storedData)
+ // const storedData = await this.storage.get(storage_key) || [];
+  this.tasks.splice(index, 1);
+  return this.storage.set(storage_key, this.tasks)
+}
+
+async Edit(index:number,item:Tasks){
+  let nTask = this.tasks[index];
+  nTask.itemName = item.itemName
+  nTask.itemDueDate = item.itemDueDate
+  nTask.itemPriority = item.itemPriority
+  nTask.itemCategory = item.itemCategory
+  return this.storage.set(storage_key, this.tasks)
 }
 
 
