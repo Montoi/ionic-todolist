@@ -6,7 +6,8 @@
       "files": ["*.ts"],
       "parserOptions": {
         "project": ["tsconfig.json", "e2e/tsconfig.json"],
-        "createDefaultProgram": true
+        "createDefaultProgram": true,
+        "tsconfigRootDir": "D:\\Angular\\To-Do-List\\to-do-list"
       },
       "extends": [
         "plugin:@angular-eslint/ng-cli-compat",

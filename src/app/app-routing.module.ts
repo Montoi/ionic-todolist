@@ -13,11 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'new-task',
-    loadChildren: () => import('./tasks/new-task/new-task.module').then( m => m.NewTaskPageModule)
-  },
-  {
-    path: 'tasks',
-    loadChildren: () => import('./tasks/tasks.module').then( m => m.TasksPageModule)
+    loadChildren: () => import('./task/new-task/new-task.module').then( m => m.NewTaskPageModule)
   },
 ];
 

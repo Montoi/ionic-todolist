@@ -1,0 +1,22 @@
+ion-modal {
+  --background: rgba(44, 39, 45, 0.2);
+  &::part(content) {
+    width: 65%;
+    height: 40vh;
+    margin: auto;
+    border-radius: 10px;
+  }
+
+  ion-content{
+    --background:transparent;
+
+
+  }
+
+  ion-datetime{
+    border-radius: 10px;
+    background: #fff;
+  }
+
+
+}
