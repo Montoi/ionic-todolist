@@ -20,20 +20,7 @@
     </ion-card-header>
     <ion-item>
       <ion-icon
-        *ngIf="item.itemPriority === 'High'"
-        color="danger"
-        size="small"
-        name="ellipse"
-      ></ion-icon>
-      <ion-icon
-        *ngIf="item.itemPriority === 'Middle'"
-        color="warning"
-        size="small"
-        name="ellipse"
-      ></ion-icon>
-      <ion-icon
-        *ngIf="item.itemPriority === 'Low'"
-        color="success"
+        [color]="item.itemPriority === 'High' ? 'danger' : (item.itemPriority === 'Middle' ? 'warning' : 'success')  "
         size="small"
         name="ellipse"
       ></ion-icon>
