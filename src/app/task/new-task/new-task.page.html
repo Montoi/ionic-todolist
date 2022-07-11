@@ -1,20 +1,23 @@
 <ion-header>
   <ion-toolbar>
+    <!-- Title of the page -->
     <ion-title>Add New Task</ion-title>
     <ion-icon name="close" slot="end" size="large" (click)="dismis()"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+<!-- here's the main card, binding all the data to usit in the typeScript -->
   <ion-card>
-
     <ion-item>
+
+      <ion-icon name="shapes-outline"slot="start"></ion-icon>
       <ion-label>Tarea</ion-label>
         <ion-textarea class="ion-margin-start" [(ngModel)]="taskName"  placeholder="Escribe la tarea aqui." ></ion-textarea>
     </ion-item>
 
     <ion-item>
+      <ion-icon name="trophy-outline"slot="start"></ion-icon>
       <ion-label>Prioridad</ion-label>
       <ion-select [(ngModel)]="taskPriority">
         <ion-select-option value="Low"><ion-icon name="add"></ion-icon>Baja</ion-select-option>
@@ -22,24 +25,22 @@
         <ion-select-option value="High">Alta</ion-select-option>
       </ion-select>
     </ion-item>
-
+    <!-- Here is a modal, where i open the calendar -->
     <ion-item id="open-modal" button >
       <ion-icon name="calendar-outline"slot="start"></ion-icon>
-      <ion-label >Due Date </ion-label>
+      <ion-label >Vencimiento </ion-label>
       <ion-text slot="end">{{formattedString}} </ion-text>
+
+
     </ion-item>
-    <ion-modal trigger="open-modal">
+    <ion-popover trigger="open-modal" showBackdrop="false" >
       <ng-template>
-        <ion-content>
-          <ion-datetime #dateTime [(ngModel)]="taskDate" (ionChange)="dateChanged(dateTime.value)"
-          showDefaultButtons="true"
-
-          >
-
+          <ion-datetime #popoverdateTime [(ngModel)]="taskDate"  (ionChange)="dateChanged(popoverdateTime.value)"
+          showDefaultButtons="true">
           </ion-datetime>
-        </ion-content>
       </ng-template>
-    </ion-modal>
+    </ion-popover>
+
 
     <ion-item>
       <ion-icon name="pricetag-outline" slot="start"></ion-icon>
